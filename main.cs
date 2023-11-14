@@ -686,7 +686,8 @@ namespace assignment{
             List_items.Add(c3);List_items.Add(d2);List_items.Add(b1);List_items.Add(d4);List_items.Add(b9);
             List_items.Add(d1);List_items.Add(b8);List_items.Add(c5);List_items.Add(c6);List_items.Add(d3);
             List_items.Add(b4);List_items.Add(c4);List_items.Add(b2);List_items.Add(b6);List_items.Add(d6);
-            while(true){
+           while(true){
+              try{
                 System.Console.WriteLine("\n--------------------------Menu------------------------");
                 System.Console.WriteLine("1.Add Media Item's ");
                 System.Console.WriteLine("2.Delete Media Item's ");
@@ -1041,7 +1042,11 @@ namespace assignment{
                 else if(n==6) Main_Program.stat_info(List_items);
                 else if(n==7) break;
                 else System.Console.WriteLine("Invalid");
-            }
+              }
+              catch(Exception ex){
+                System.Console.WriteLine(ex.Message);
+              }
+           }
         }
     }
     #pragma warning disable CS8600
