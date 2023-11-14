@@ -13,7 +13,7 @@ using System.Collections.Generic;
 #pragma warning disable CS8601
 
 namespace assignment{
-    //---Generic class for all the common properties of media ---//
+    //---------------Generic class for all the common properties of media items---------------//
     public class Media<T,TT>{
         internal T Title;
         internal T Type;
@@ -24,7 +24,7 @@ namespace assignment{
             this.Release_year=release_year;
         }
     }
-    //---------Book Main Class--------------//
+    //-----------------------------------------Book Main Class---------------------------------//
     public partial class Book:Media<string,int>{
         public string Author;
         public string Publication;
@@ -35,11 +35,12 @@ namespace assignment{
             this.Price=price;
         }
     }
-    //---------partial class of Book--------//
+    //----------------------------------Book partial class of Book---------------------------//
     public partial class Book{
         /*
         To Delete or Update a particular item of book from the list,first we store the index
-        of the Book object's in book_idx list.Then by using the stored index ,we have to update or delete items.
+        of the Book object's in book_idx list.Then by using 
+        the stored index we have to update or delete items.
         */
         static List<int> book_idx=new List<int>();
         static int idx=0;
@@ -69,12 +70,17 @@ namespace assignment{
         public static void delete_book(List<object> List_items){
             int id,rem_idx;
             System.Console.Write("Enter the ID No of Book Want to remove:");
+            try{
             id=int.Parse(Console.ReadLine());
             rem_idx=book_idx[id-1];
             List_items.RemoveAt(rem_idx);
             System.Console.WriteLine($"-------{id}.ID Book is Deleted------");
+            }
+            catch(Exception ex){
+                System.Console.WriteLine(ex.Message);
+            }
         }
-        // This method will delete all the book's object's
+        //---------This method will delete all the book's information-------------//
         public static void all_del_book(List<object> List_items){
             List_items.RemoveAll(data=>data is Book);
             System.Console.WriteLine($"-------All Book's Are Deleted------");
@@ -86,6 +92,7 @@ namespace assignment{
         will be changed.
         */
         public static void upadate_book(List<object> List_items){
+            try{
             int id,up_idx,option;
             System.Console.Write("Enter the ID No of Book Want to update:");
             id=int.Parse(Console.ReadLine());
@@ -121,12 +128,17 @@ namespace assignment{
                 ((Book)List_items[up_idx]).Release_year=change;
             }
             System.Console.WriteLine($"-------{id}.ID Book information Updated------");
+            }
+            catch(Exception ex){
+                System.Console.WriteLine(ex.Message);
+            }
+
         }
-        // this method will show the order of recent year published book's
+        //---------this method will show the recent year published book's-------------------//
         public static void show_book_recent_year(List<object> List_items){
             int cnt=1;
             var ans=from data in List_items where data is Book orderby ((Book)data).Release_year descending select data;
-            System.Console.WriteLine("\n------------All The Book's Information------------");
+            System.Console.WriteLine("\n-----All The Book's Information By Recent Year------");
             foreach(var it in ans){
                 Console.WriteLine($"{cnt}.Book:\n---Title:{((Book)it).Title}\n---Author:{((Book)it).Author}");
                 Console.WriteLine($"---Book Type:{((Book)it).Type}\n---Release Year:{((Book)it).Release_year}\n---Publication:{((Book)it).Publication}\n---Price:{((Book)it).Price}");
@@ -134,7 +146,7 @@ namespace assignment{
             }
             System.Console.WriteLine("------------------------------------------------------");
         }
-        //This method will show The Highest price to lowest price of Book List
+        //------------This method will show The Highest price to lowest price of Book List--------//
         public static void show_high_low(List<object> List_items){
             int cnt=1;
             var ans=from data in List_items where data is Book orderby ((Book)data).Price descending select data;
@@ -146,7 +158,7 @@ namespace assignment{
             }
             System.Console.WriteLine("------------------------------------------------------");
         }
-        //This method will show The Lowest price to Highest price of Book List
+        //-------This method will show The Lowest price to Highest price of Book List----------//
         public static void show_low_high(List<object> List_items){
             int cnt=1;
             var ans=from data in List_items where data is Book orderby ((Book)data).Price ascending select data;
@@ -193,7 +205,7 @@ namespace assignment{
             System.Console.WriteLine("------------------------------------------------------");
         }
         /*
-        User will give a Book Publication Name { etc}
+        User will give a Book Publication Name 
         then all the Book's of the Publication will be shown from the list items
         */
         public static void show_publication(List<object> List_items){
@@ -210,7 +222,7 @@ namespace assignment{
             }
             System.Console.WriteLine("------------------------------------------------------");
         }
-         /*
+        /*
         User will give a Book Author Name {Humayon ahmed,Kaji Nazrul Islam etc}
         then all the Book's of the Author will be removed from the list items
         */
@@ -221,8 +233,8 @@ namespace assignment{
             System.Console.WriteLine($"---All The Book's of {author} Author Is Deleted-----");
         }
         /*
-        User will give a Book type Name {Novel,poem,literature etc}
-        then all the Book's of the type will be shown from the list items
+        User will give a Book type Name {Novel,poem,poetry etc}
+        then all the Book's of the type will be deleted from the list items
         */
         public static void del_book_by_type(List<object> List_items){
             System.Console.Write("Enter Book Type Name To Delete:");
@@ -231,13 +243,14 @@ namespace assignment{
             System.Console.WriteLine($"---All The Book's of {type} Type Is Deleted-----");
         }
     }
-    //CD class//
+    //------------------------------CD Main class------------------------------------------//
     public partial class CD:Media<string,int>{
         public string Artist;
         public CD(string artist,string title,string type,int date):base(title,type,date){
             this.Artist=artist;
         }
     }
+    //------------------------------CD Partial class---------------------------------------//
     public partial class CD{
         /*
         To Delete or Update a particular item of CD from the list,first we store the index
@@ -266,12 +279,17 @@ namespace assignment{
         list,we delete the partuar object from the list.
         */
         public static void delete_cd(List<object> List_items){
-            int id,rem_idx;
-            System.Console.Write("Enter the ID No of Book Want to remove:");
-            id=int.Parse(Console.ReadLine());
-            rem_idx=cd_idx[id-1];
-            List_items.RemoveAt(rem_idx);
-            System.Console.WriteLine($"------{id}.ID CD's Information Deleted-------");
+            try{
+              int id,rem_idx;
+              System.Console.Write("Enter the ID No of CD Want to remove:");
+              id=int.Parse(Console.ReadLine());
+              rem_idx=cd_idx[id-1];
+              List_items.RemoveAt(rem_idx);
+              System.Console.WriteLine($"------{id}.ID CD's Information Deleted-------");
+            }
+            catch(Exception ex){
+                System.Console.WriteLine(ex.Message);
+            }
         }
         public static void all_del_cd(List<object> List_items){
             List_items.RemoveAll(data=>data is CD);
@@ -280,9 +298,10 @@ namespace assignment{
         /*
         To update a particular CD choosing from the CD list,first we take user 
         input  of the CD Serial number,then by using the index we store in the cd_idx
-        list,we can update  the partuar object ,a particular information.
+        list,we can update  the particular object ,a particular information.
         */
         public static void cd_update(List<object> List_items){
+        try{ 
             int id,up_idx,option;
             System.Console.Write("Enter the ID No of CD Want to Update:");
             id=int.Parse(Console.ReadLine());
@@ -318,7 +337,12 @@ namespace assignment{
                 ((CD)List_items[up_idx]).Release_year=change;
             }
             System.Console.WriteLine($"------{id}.ID CD's Information Updated-------");
+          }
+          catch(Exception ex){
+                System.Console.WriteLine(ex.Message);
+          }
         }
+        //------------This Method will show cd by the recent year---------------------// 
         public static void show_cd_by_recent_year(List<object> List_items){
             int cnt=1;
             var ans=from data in List_items where data is CD orderby ((CD)data).Release_year descending select data;
@@ -338,7 +362,7 @@ namespace assignment{
             System.Console.Write("Enter the Artist Name:");
             string artist=Console.ReadLine();
             int cnt=1;
-            System.Console.WriteLine("\n-------------All The CD's Information-------------");
+            System.Console.WriteLine($"\n----All The CD's Information of {artist} Artist----");
             var ans_artist=from data in List_items where (data is CD && ((CD)data).Artist==artist ) select data;
             foreach(var it in ans_artist){
                 Console.WriteLine($"{cnt}.CD:\n---Title:{((CD)it).Title}\n---Author:{((CD)it).Artist}");
@@ -356,7 +380,7 @@ namespace assignment{
             string type=Console.ReadLine();
             int cnt=1;
             var ans_type=from data in List_items where (data is CD && ((CD)data).Type==type ) select data;
-            System.Console.WriteLine("\n--------------All The CD's Information------------");
+            System.Console.WriteLine($"\n-----All The CD's Information of {type} Type------");
             foreach(var it in ans_type){
                 Console.WriteLine($"{cnt}.CD:\n---Title:{((CD)it).Title}\n---Author:{((CD)it).Artist}");
                 Console.WriteLine($"---Book Type:{((CD)it).Type}\n---Release Year:{((CD)it).Release_year}");
@@ -385,7 +409,7 @@ namespace assignment{
             System.Console.WriteLine($"---All The CD's of {type} Type Information Deleted----");
         }
     }
-    //DVD class//
+    //---------------------------------------DVD Main class-----------------------------------//
     public partial class DVD:Media<string,int>{
         public string Director;
         public int box_office;
@@ -394,6 +418,7 @@ namespace assignment{
             this.box_office=box;
         }
     }
+    //------------DVD partial class------------//
     public partial class DVD{
         /*
         To Delete or Update a particular item of DVD from the list,first we store the index
@@ -402,7 +427,7 @@ namespace assignment{
         static List<int> dvd_idx=new List<int>();
         static int idx=0;
         /*
-        This method will show all the dvd object store in the list and also 
+        This method will show all the dvd information store in the list and also 
         store the object of the dvd type index in dvd_idx.
         */
         public static void show_dvd(List<object> List_items){
@@ -426,13 +451,19 @@ namespace assignment{
         list,then we delete the partuar object from the list.
         */
         public static void delete_dvd(List<object> List_items){
+         try{
             int id,rem_idx;
-            System.Console.Write("Enter the ID No of Book Want to remove:");
+            System.Console.Write("Enter the ID No of DVD Want to remove:");
             id=Convert.ToInt32(Console.ReadLine());
             rem_idx=dvd_idx[id-1];
             List_items.RemoveAt(rem_idx);
             System.Console.WriteLine($"-----{id} ID DVD information deleted-----");
+         }
+         catch(Exception ex){
+            System.Console.WriteLine(ex.Message);
+         }
         }
+        //-------This Method Will remove all the dvd information-------------//
         public static void all_del_dvd(List<object> List_items){
             List_items.RemoveAll(data=>data is DVD);
             System.Console.WriteLine($"-----All the DVD information deleted-----");
@@ -443,8 +474,9 @@ namespace assignment{
         list,then we update  the particular object infromation of the particular dvd.
         */
         public static void dvd_update(List<object> List_items){
+          try{
             int id,up_idx,option;
-            System.Console.Write("Enter the ID No of DVD Want to remove:");
+            System.Console.Write("Enter the ID No of DVD Want to Update:");
             id=int.Parse(Console.ReadLine());
             up_idx=dvd_idx[id-1];
             System.Console.WriteLine("-------------------------Menu-------------------------");
@@ -477,8 +509,13 @@ namespace assignment{
                 change=int.Parse(Console.ReadLine());
                 ((DVD)List_items[up_idx]).Release_year=change;
             }
-            System.Console.WriteLine($"-----{id} ID DVD information Updated-----");
+            System.Console.WriteLine($"-----{id}.ID DVD information Updated-----");
+          }
+          catch(Exception ex){
+            System.Console.WriteLine(ex.Message);
+          }
         }
+        //---------This method will show the recently published dvd to the older dvd information-------------//
         public static void show_by_recent_year(List<object> List_items){
             int cnt=1;
             var ans=from data in List_items where data is DVD orderby ((DVD)data).Release_year descending select data;
@@ -489,11 +526,12 @@ namespace assignment{
                 ++cnt;        
             }         
             System.Console.WriteLine("------------------------------------------------------");
-        }  
+        } 
+        //---------this method will show the highest to low box office earning------------------// 
         public static void show_by_box_office(List<object> List_items){
             int cnt=1;
             var ans=from data in List_items where data is DVD orderby ((DVD)data).box_office descending select data;
-            System.Console.WriteLine("--------All the DVD information With Highest Box Office-------");
+            System.Console.WriteLine("-------All the DVD information With High to Low Box Office-----");
             foreach(var it in ans){
                 Console.WriteLine($"{cnt}.DVD:\n---Title:{((DVD)it).Title}\n---Director:{((DVD)it).Director}");     
                 Console.WriteLine($"---DVD Type:{((DVD)it).Type}\n---Release Year:{((DVD)it).Release_year}\n---Box Office:${((DVD)it).box_office}M");     
@@ -508,7 +546,7 @@ namespace assignment{
         public static void show_by_dvd_type(List<object> List_items){                                                                            
             int cnt=1;
             /*
-            first we store the answer then show the answer
+            first we store all the dvd type int the answer then show the answer
             */
             System.Console.Write("Enter the DVD Type:");
             string type=Console.ReadLine();
@@ -572,6 +610,8 @@ namespace assignment{
             int cnt=ans.Count();
             System.Console.WriteLine($"The number of activity store in the list of {check} is:{cnt}");
         }
+
+        //-------------this method will show statistics about the information of media item's stored---------//
         public static void stat_info(List<object>list){
             System.Console.WriteLine("\n----------Statistics of Information Stored------------");
             var ans_b=from data in list where data is Book select data;
@@ -588,7 +628,7 @@ namespace assignment{
             System.Console.WriteLine($"Number of DVD's Information Stored:{dvd} and {(double)dvd/total*100:F2}%");
             System.Console.WriteLine("-------------------------------------------------------");
         }
-        //----------static Method To show all the Media Item stored------//
+        //----------static Method To show all the Media Item's stored------//
         static void show_all(List<object> list){
             System.Console.WriteLine("\n--------All the Media Item's Stored In The List--------");
             int cnt=1;
@@ -596,7 +636,7 @@ namespace assignment{
                 if(data is Book){
                     Book it=(Book)data;
                     Console.WriteLine($"{cnt}.Book:\n---Title:{it.Title}\n---Author:{it.Author}");
-                    Console.WriteLine($"---Book Type:{it.Type}\n---Release Year:{it.Release_year}");
+                    Console.WriteLine($"---Book Type:{it.Type}\n---Release Year:{it.Release_year}\n---Price:{it.Price}");
                 }
                 else if(data is CD){
                     CD it=(CD)data;
@@ -606,7 +646,8 @@ namespace assignment{
                 else if(data is DVD){
                     DVD it=(DVD)data;
                     Console.WriteLine($"{cnt}.DVD:\n---Title:{it.Title}\n---Director:{it.Director}");
-                    Console.WriteLine($"---DVD Type:{it.Type}\n---Release Year:{it.Release_year}\n---Box Office:${((DVD)it).box_office}M");
+                    Console.WriteLine($"---DVD Type:{it.Type}\n---Release Year:{it.Release_year}");
+                    System.Console.WriteLine($"---Box Office:{it.box_office}");
                 }
                 ++cnt;
             }
@@ -660,7 +701,7 @@ namespace assignment{
                 if(n==1){
                     //add items//
                     System.Console.WriteLine("-------------------------Menu-------------------------");
-                    System.Console.WriteLine("1.Add Book");
+                    System.Console.WriteLine("1.Add Book ");
                     System.Console.WriteLine("2.Add CD ");
                     System.Console.WriteLine("3.Add DVD ");
                     System.Console.Write("Enter your Option:");
@@ -671,7 +712,7 @@ namespace assignment{
                         string author,title,type,publication;
                         int date,price;
                         System.Console.WriteLine("----------------Enter Book Information----------------");
-                        System.Console.Write("---Book Auther Name:");
+                        System.Console.Write("---Book Author Name:");
                         author=Console.ReadLine();
                         System.Console.Write("---Book Title Name:");
                         title=Console.ReadLine();
@@ -688,7 +729,7 @@ namespace assignment{
                         System.Console.WriteLine("------------------------------------------------------");
                     } 
                     else if(op==2){
-                        //-----to add CD-----//
+                        //-----to add CD information-----//
                         string artist,title,type;
                         int date;
                         System.Console.WriteLine("------------------Enter CD Information----------------");
@@ -705,7 +746,7 @@ namespace assignment{
                         System.Console.WriteLine("------------------------------------------------------");                      
                     }
                     else if(op==3){
-                        //----to add DVD--------//
+                        //----to add DVD information--------//
                         string director,title,type;
                         int date,box;
                         System.Console.WriteLine("-----------------Enter DVD Information---------------");
@@ -736,9 +777,9 @@ namespace assignment{
                     if(nxt==1){
                         //-----------delete book items various format-----------//
                         System.Console.WriteLine("-----------------------Menu-------------------------");
-                        System.Console.WriteLine("1.Delete By Manually");
-                        System.Console.WriteLine("2.Delete By Author");
-                        System.Console.WriteLine("3.Delete By Type");
+                        System.Console.WriteLine("1.Delete By Manually From Book List");
+                        System.Console.WriteLine("2.Delete By Book Author Name");
+                        System.Console.WriteLine("3.Delete By Book Type");
                         System.Console.WriteLine("4.Delete all Book's");
                         System.Console.Write("Enter Option:");
                         option=int.Parse(Console.ReadLine());
@@ -761,14 +802,18 @@ namespace assignment{
                                 Book.all_del_book(List_items);
                                 break;
                             }
+                            default:{
+                                System.Console.WriteLine("Invalid");
+                                break;
+                            }
                         }
                     }
                     else if(nxt==2){
                         //--------------delete CD items various format-------------//
                         System.Console.WriteLine("------------------------Menu--------------------------");
-                        System.Console.WriteLine("1.Delete By Manually");
-                        System.Console.WriteLine("2.Delete By Artist");
-                        System.Console.WriteLine("3.Delete By Type");
+                        System.Console.WriteLine("1.Delete By Manually From CD List");
+                        System.Console.WriteLine("2.Delete By CD Artist");
+                        System.Console.WriteLine("3.Delete By CD Type");
                         System.Console.WriteLine("4.Delete all CD's");
                         System.Console.Write("Enter Option:");
                         option=int.Parse(Console.ReadLine());
@@ -791,14 +836,18 @@ namespace assignment{
                                 CD.all_del_cd(List_items);
                                 break;
                             }
+                            default:{
+                                System.Console.WriteLine("Invalid");
+                                break;
+                            }
                         }
                     }
                     else if(nxt==3){
                         //-----------delete dvd item's various form-------------//
                         System.Console.WriteLine("------------------------Menu--------------------------");
-                        System.Console.WriteLine("1.Delete By Manually");
-                        System.Console.WriteLine("2.Delete By Director");
-                        System.Console.WriteLine("3.Delete By Type");
+                        System.Console.WriteLine("1.Delete By Manually from DVD List");
+                        System.Console.WriteLine("2.Delete By Director Name");
+                        System.Console.WriteLine("3.Delete By DVD Type");
                         System.Console.WriteLine("4.Delete all DVD");
                         System.Console.Write("Enter Option:");
                         option=int.Parse(Console.ReadLine());
@@ -819,6 +868,10 @@ namespace assignment{
                             }
                             case 4:{
                                 DVD.all_del_dvd(List_items);
+                                break;
+                            }
+                            default:{
+                                System.Console.WriteLine("Invalid");
                                 break;
                             }
                         }
@@ -848,13 +901,14 @@ namespace assignment{
                         DVD.show_dvd(List_items);
                         DVD.dvd_update(List_items);
                     }
+                    else System.Console.WriteLine("Invalid");
                 }
                 else if(n==4){
                     //-----------------show Media items-----------------//
                     System.Console.WriteLine("-------------------------Menu-------------------------");
-                    System.Console.WriteLine("1.Show Book's Detail's ");
-                    System.Console.WriteLine("2.Show CD's Detail's ");
-                    System.Console.WriteLine("3.Show DVD's Detail's");
+                    System.Console.WriteLine("1.Show & Find Book's Detail's ");
+                    System.Console.WriteLine("2.Show & Find CD's Detail's ");
+                    System.Console.WriteLine("3.Show & Find DVD's Detail's");
                     System.Console.WriteLine("4.Show all stored Media Detail's");
                     System.Console.Write("Enter Your Option:");
                     sho=int.Parse(Console.ReadLine());
@@ -863,12 +917,12 @@ namespace assignment{
                         //------------show book items------------//
                         System.Console.WriteLine("------------------------Menu---------------------------");
                         System.Console.WriteLine("1.Show all Book's");
-                        System.Console.WriteLine("2.Show/Find book's Recent");
-                        System.Console.WriteLine("3.Show/Find Book's by auther");
-                        System.Console.WriteLine("4.Show/Find Book's by type");
-                        System.Console.WriteLine("5.Show/Find Book's by publication");
-                        System.Console.WriteLine("6.Show/Find Book's by Lowest to Highest Price");
-                        System.Console.WriteLine("7.Show/Find Book's by Highest to Lowest Price");
+                        System.Console.WriteLine("2.Show book's Recent");
+                        System.Console.WriteLine("3.Show & Find Book's by auther");
+                        System.Console.WriteLine("4.Show & Find Book's by type");
+                        System.Console.WriteLine("5.Show & Find Book's by publication");
+                        System.Console.WriteLine("6.Show Book's by Lowest to Highest Price");
+                        System.Console.WriteLine("7.Show Book's by Highest to Lowest Price");
                         System.Console.Write("Enter Option:");
                         option=int.Parse(Console.ReadLine());
                         System.Console.WriteLine("--------------------------------------------------------");
@@ -901,15 +955,19 @@ namespace assignment{
                                 Book.show_high_low(List_items);
                                 break;
                             }
+                            default:{
+                                System.Console.WriteLine("Invalid");
+                                break;
+                            }
                         }
                     }
                     else if(sho==2){
                         //--------------show cd items----------------//
                         System.Console.WriteLine("------------------------Menu-------------------------");
                         System.Console.WriteLine("1.Show all CD's");
-                        System.Console.WriteLine("2.Show/Find CD's Recent Year");
-                        System.Console.WriteLine("3.Show/Find CD's by artist");
-                        System.Console.WriteLine("4.Show/Find CD's by type");
+                        System.Console.WriteLine("2.Show CD's Recent Year");
+                        System.Console.WriteLine("3.Show & Find CD's by artist");
+                        System.Console.WriteLine("4.Show & Find CD's by type");
                         System.Console.Write("Enter Option:");
                         option=int.Parse(Console.ReadLine());
                         System.Console.WriteLine("------------------------------------------------------");
@@ -930,16 +988,20 @@ namespace assignment{
                                 CD.show_by_cd_type(List_items);
                                 break;
                             }
+                            default:{
+                                System.Console.WriteLine("Invalid");
+                                break;
+                            }
                         }
                     }
                     else if(sho==3){
                         //--------------show DVD items---------------//
                         System.Console.WriteLine("-------------------------Menu--------------------------");
                         System.Console.WriteLine("1.Show all DVD's");
-                        System.Console.WriteLine("2.Show/Find DVD's in Recent Year");
-                        System.Console.WriteLine("3.Show/Find DVD's by Director");
-                        System.Console.WriteLine("4.Show/Find DVD's by type");
-                        System.Console.WriteLine("5.Show/Find DVD's by Box Office Earning");
+                        System.Console.WriteLine("2.Show DVD's in Recent Year");
+                        System.Console.WriteLine("3.Show & Find DVD's by Director");
+                        System.Console.WriteLine("4.Show & Find DVD's by type");
+                        System.Console.WriteLine("5.Show DVD's by Box Office Earning");
                         System.Console.Write("Enter Option:");
                         option=int.Parse(Console.ReadLine());
                         System.Console.WriteLine("------------------------------------------------------");
@@ -964,15 +1026,21 @@ namespace assignment{
                                 DVD.show_by_box_office(List_items);
                                 break;
                             }
+                            default:{
+                                System.Console.WriteLine("Invalid");
+                                break;
+                            }
                         }
                     }
                     else if(sho==4){
                         Main_Program.show_all(List_items);
                     }
+                    else System.Console.WriteLine("Invalid");
                 }
                 else if(n==5) Main_Program.stat_(List_items);
                 else if(n==6) Main_Program.stat_info(List_items);
                 else if(n==7) break;
+                else System.Console.WriteLine("Invalid");
             }
         }
     }
